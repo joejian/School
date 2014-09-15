@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>Practice</title>
+<!--<script type="text/javascript" src="practice.js"/>-->
+<style>
+img {
+	height:128;
+	width:128;
+}
+p {
+	font-size: 100%;
+}
+#solution {
+	color: white;
+}
+input {
+	autocomplete="off";
+}
+</style>
+<link rel="stylesheet" type="text/css" href="../ext/alphabet.css" />
+<script>
+	var romanAlphabet = ['a','i','u','e','o',
+				'ka','ki','ku','ke','ko',
+				'sa','shi','su','se','so',
+				'ta','chi','tsu','te','to',
+				'na','ni','nu','ne','no',
+				'ha','hi','fu','he','ho',
+				'ma','mi','mu','me','mo',
+				'ya','yu','yo',
+				'ra','ri','ru','re','ro',
+				'wa','wo',
+				'n'];
+	
+	var curAlphabet = "fail";
+	
+	function getRandom() {
+		var x = Math.floor((Math.random() * 46) + 1);
+		var y; 
+		if (document.getElementById("hg").checked) {
+			y = 1;
+		} else if (document.getElementById("kk").checked) {
+			y = 2;
+		} else {
+			y = Math.floor((Math.random() * 2) + 1);
+		}
+		if (y == 1) {
+			document.getElementById("ranNumber").innerHTML = 
+			'<th>Hiragana</th><tr><td><img src="Hiragana/hg' + x + '.png";></td></tr>';
+		} else {
+			document.getElementById("ranNumber").innerHTML = 
+			'<th>Katakana</th><tr><td><img src="Katakana/kk' + x + '.png";></td></tr>';
+			//<p>' + romanAlphabet[x-1] + '</p>'
+		}
+		
+		curAlphabet = romanAlphabet[x-1];
+	}
+
+	function checkAnswer() {
+		var guess = document.getElementById("roman").value.toLowerCase();
+		if (guess==curAlphabet) {
+			document.getElementById("answer").innerHTML = "You Are Correct!";
+		} else {
+			document.getElementById("answer").innerHTML = "Sorry, try again!";
+			document.getElementById("solution").value = curAlphabet;
+		}		
+	}
+
+	function clearInput() {
+		document.getElementsByTagName("input").value = "";
+	}
+</script>
+</head>
+<body onload="clearInput()">
+<h1>Practice</h1>
+<form>
+	<input type="radio" name="alphabet" id="hg">Hiragana
+	<input type="radio" name="alphabet" id="kk">Katakana
+	<input type="radio" name="alphabet" id="both">Both
+	<br><br>
+	<input type="button" onclick="getRandom()" value="Practice!">
+</form>
+<br>
+<table id="ranNumber">
+</table>
+<br>
+<form>
+	Enter Roman: <input type="text" id="roman"> 
+	<input type="button" onclick="checkAnswer()" value="Submit!">
+</form>
+<dir id="answer"></dir>
+Answer: <input type="text" id="solution" value="">
+<br>(Highlight the inputbox to see answer.)
+<br>
+</body>
+</html>
